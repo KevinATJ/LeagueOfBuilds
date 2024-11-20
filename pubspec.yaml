@@ -36,6 +36,10 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
 
+  flutter_native_splash: ^2.4.3
+
+  flutter_launcher_icons: ^0.14.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -50,6 +54,43 @@ dev_dependencies:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
+flutter_native_splash:
+  color: "#1d334a"  # Color de fondo de la pantalla splash
+  image: assets/icons/app_icon_ss.png  # Ruta del archivo de la imagen
+  android_12:
+    color: "#1d334a"  # Color de fondo de la pantalla splash
+    image: assets/icons/app_icon_ss.png  # Ruta del archivo de la imagen
+  android: true  # Incluir en Android
+  ios: true      # Incluir en iOS
+  web: false     # Desactivar en Web
+  android_gravity: center  # Colocar el logo en el centro
+  fullscreen: true  # Pantalla completa para ocultar la barra de estado
+
+flutter_launcher_icons:
+  android: "launcher_icon"        # Generar el ícono para Android
+  ios: true            # Generar el ícono para iOS
+  remove_alpha_ios: true  # Eliminar transparencia en iOS
+  image_path: "assets/icons/app_icon.png"  # Ruta al archivo de imagen del ícono
+  min_sdk_android: 21  # SDK mínimo de Android
+  adaptive_icon_background: "#FF1D334A"  # Color de fondo para el ícono adaptativo en Android
+  adaptive_icon_foreground: "assets/icons/app_icon.png"  # Ruta a la imagen del ícono adaptativo en Android
+
+  # Opciones adicionales para más plataformas (Web, Windows, macOS)
+  web:
+    generate: true
+    image_path: "assets/icons/app_icon.png"  # Ruta de la imagen para Web
+    background_color: "#FF1D334A"  # Color de fondo para el ícono web
+    theme_color: "#FF1D334A"       # Color de tema para el ícono web
+
+  windows:
+    generate: true
+    image_path: "assets/icons/app_icon.png"  # Ruta de la imagen para Windows
+    icon_size: 48  # Tamaño del ícono de Windows
+
+  macos:
+    generate: true
+    image_path: "assets/icons/app_icon.png"  # Ruta de la imagen para macOS
+
 # The following section is specific to Flutter packages.
 flutter:
 
@@ -59,9 +100,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+
+  - assets/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
