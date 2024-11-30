@@ -14,3 +14,11 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Links API
+
+- https://ddragon.leagueoflegends.com/cdn/14.23.1/data/es_MX/item.json
+- https://ddragon.leagueoflegends.com/cdn/14.23.1/data/es_MX/champion.json
+- https://ddragon.leagueoflegends.com/api/versions.json
+- https://ddragon.leagueoflegends.com/cdn/14.23.1/img/champion/Swain.png
+- https://ddragon.leagueoflegends.com/cdn/14.23.1/img/item/1001.png
