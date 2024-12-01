@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'Models/items_data_base.dart';
+import 'Models/champions_data_base.dart';
 
 String? latestApiVersion;
 
@@ -18,10 +19,14 @@ void main() async {
     latestApiVersion = await fetchLatestVersion();
     // ignore: avoid_print
     print('Última versión de la API: $latestApiVersion');
-    // Obtener y guardar los datos de los ítems en la base de datos
+    // Obtener y guardar los datos de los items en la base de datos
     await fetchItemsData();
-    // Imprimir los ítems almacenados en la base de datos
+    // Obtener y guardar los datos de los champions en la base de datos
+    await fetchChampionsData();
+    // Imprimir los items almacenados en la base de datos
     await printItemsFromDB();
+    // Imprimir los champions almacenados en la base de datos
+    await printChampionsFromDB();
 
   } else {
     // ignore: avoid_print
@@ -80,6 +85,7 @@ Future<String?> fetchLatestVersion() async {
   }
 }
 
+// Función para obtener los items y guardarlos en la base de datos
 Future<void> fetchItemsData() async {
   if (latestApiVersion != null) {
     final url = 'https://ddragon.leagueoflegends.com/cdn/$latestApiVersion/data/es_MX/item.json';
@@ -91,15 +97,15 @@ Future<void> fetchItemsData() async {
         final data = json.decode(utf8.decode(response.bodyBytes));
         final items = data['data'];
 
-        // Recorremos los items y guardamos el nombre y la imagen completa
+        // Recorremos los items y guardar el nombre y la imagen
         items.forEach((key, value) async {
           if (value['gold'] != null && value['gold']['total'] > 0 && value['gold']['purchasable'] == true && !value.containsKey('inStore')) {
             final item = {
-              'name': value['name'], // Guardamos el nombre con tildes correctamente
-              'image_full': value['image']['full'] // Guardamos el valor de la imagen completa
+              'name': value['name'], // Guardar el nombre
+              'image_full': value['image']['full'] // Guardar el valor de la imagen
             };
 
-            // Guardamos el item en la base de datos
+            // Guardar el item en la base de datos
             await ItemsDataBase.instance.insertItem(item);
           }
         });
@@ -117,17 +123,54 @@ Future<void> fetchItemsData() async {
   }
 }
 
+// Función para obtener los champions y guardarlos en la base de datos
+Future<void> fetchChampionsData() async {
+  if (latestApiVersion != null) {
+    final url = 'https://ddragon.leagueoflegends.com/cdn/$latestApiVersion/data/es_MX/champion.json';
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        // Aseguramos que la respuesta sea decodificada correctamente en UTF-8
+        final data = json.decode(utf8.decode(response.bodyBytes));
+        final champions = data['data'];
+
+        // Recorremos los champion y guardar el nombre y la imagen
+        champions.forEach((key, value) async {
+          final champion = {
+            'name': value['name'], // Guardar el nombre del champion
+            'image_full': value['image']['full'] // Guardar la imagen
+          };
+
+          // Guardamos el champion en la base de datos
+          await ChampionsDataBase.instance.insertChampion(champion);
+        });
+      } else {
+        // ignore: avoid_print
+        print('Error al obtener los champions. Código de estado: ${response.statusCode}');
+      }
+    } catch (e) {
+      // ignore: avoid_print
+      print('Error al conectarse al API de champions: $e');
+    }
+  } else {
+    // ignore: avoid_print
+    print('No se pudo obtener la versión más reciente de la API');
+  }
+}
+
+// Función para imprimir en la terminal los valores de la base de datos de los items
 Future<void> printItemsFromDB() async {
   try {
-    // Obtener los ítems de la base de datos
+    // Obtener los items de la base de datos
     final items = await ItemsDataBase.instance.fetchItems();
 
     if (items.isNotEmpty) {
       // Imprimir cada item
-      items.forEach((item) {
+      for (var item in items) {
         // ignore: avoid_print
         print('Item: ${item['name']}, Image: ${item['image_full']}');
-      });
+      }
     } else {
       // ignore: avoid_print
       print('No se encontraron ítems en la base de datos.');
@@ -135,6 +178,28 @@ Future<void> printItemsFromDB() async {
   } catch (e) {
     // ignore: avoid_print
     print('Error al obtener los ítems desde la base de datos: $e');
+  }
+}
+
+// Función para imprimir en la terminal los valores de la base de datos de los champions
+Future<void> printChampionsFromDB() async {
+  try {
+    // Obtener los champions de la base de datos
+    final champions = await ChampionsDataBase.instance.fetchChampions();
+
+    if (champions.isNotEmpty) {
+      // Imprimir cada champion
+      for (var champion in champions) {
+        // ignore: avoid_print
+        print('Champion: ${champion['name']}, Image: ${champion['image_full']}');
+      }
+    } else {
+      // ignore: avoid_print
+      print('No se encontraron champions en la base de datos.');
+    }
+  } catch (e) {
+    // ignore: avoid_print
+    print('Error al obtener los champions desde la base de datos: $e');
   }
 }
 
