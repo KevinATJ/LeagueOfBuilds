@@ -98,7 +98,8 @@ Future<void> fetchItemsData() async {
         final items = data['data'];
 
         // Recorremos los items y guardar el nombre y la imagen
-        items.forEach((key, value) async {
+        for (var key in items.keys) {
+          final value = items[key];
           if (value['gold'] != null && value['gold']['total'] > 0 && value['gold']['purchasable'] == true && !value.containsKey('inStore')) {
             final item = {
               'name': value['name'], // Guardar el nombre
@@ -108,7 +109,7 @@ Future<void> fetchItemsData() async {
             // Guardar el item en la base de datos
             await ItemsDataBase.instance.insertItem(item);
           }
-        });
+        }
       } else {
         // ignore: avoid_print
         print('Error al obtener los ítems. Código de estado: ${response.statusCode}');
@@ -135,8 +136,9 @@ Future<void> fetchChampionsData() async {
         final data = json.decode(utf8.decode(response.bodyBytes));
         final champions = data['data'];
 
-        // Recorremos los champion y guardar el nombre y la imagen
-        champions.forEach((key, value) async {
+        // Recorremos los champions y guardar el nombre y la imagen
+        for (var key in champions.keys) {
+          final value = champions[key];
           final champion = {
             'name': value['name'], // Guardar el nombre del champion
             'image_full': value['image']['full'] // Guardar la imagen
@@ -144,7 +146,7 @@ Future<void> fetchChampionsData() async {
 
           // Guardamos el champion en la base de datos
           await ChampionsDataBase.instance.insertChampion(champion);
-        });
+        }
       } else {
         // ignore: avoid_print
         print('Error al obtener los champions. Código de estado: ${response.statusCode}');

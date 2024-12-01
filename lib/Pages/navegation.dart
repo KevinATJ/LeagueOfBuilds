@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'about.dart';
+import 'builds.dart';
+import 'home.dart';
 
+// Página Navegation
 class Navegation extends StatefulWidget {
   const Navegation({super.key, required this.title});
 
@@ -23,13 +27,13 @@ class _NavegationState extends State<Navegation> {
   Widget _buildPage() {
     switch (_selectedIndex) {
       case 0:
-        return const Center(child: Text('Aquí van a crearse cards con las builds.'));//Reemplazar esto por pantallas a crear
+        return const Home(title: 'Inicio');
       case 1:
-        return const Center(child: Text('Aquí se mostrarán las builds recientes.'));//Reemplazar esto por pantallas a crear
+        return const Builds(title: 'Builds');
       case 2:
-        return const Center(child: Text('Aquí se encontrará la información de la aplicación.'));//Reemplazar esto por pantallas a crear
+        return const About(title: 'Acerca');
       default:
-        return const Center(child: Text('Aquí van a crearse cards con las builds.'));
+        return const Home(title: 'Inicio');
     }
   }
 
@@ -41,32 +45,34 @@ class _NavegationState extends State<Navegation> {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 171, 158, 48),
+          backgroundColor: const Color(0xFF15242F),
           title: Text(
             widget.title,
-            style: const TextStyle(color: Colors.white),
+            style: const TextStyle(
+              color: Color(0xFFFFFFFF)
+            ),
           ),
         ),
         body: _buildPage(), // Solo muestra la página seleccionada
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          backgroundColor: const Color.fromARGB(255, 171, 158, 48),
+          backgroundColor: const Color(0xFF15242F),
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.build),
-              label: 'Mis Builds',
+              icon: Icon(Icons.home),
+              label: 'Inicio',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.history),
-              label: 'Builds Recientes',
+              icon: Icon(Icons.build),
+              label: 'Builds',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.info),
-              label: 'Sobre',
+              label: 'Acerca',
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Colors.white,
+          selectedItemColor: const Color(0xFFFFFFFF),
           onTap: _onItemTapped,
         ),
       ),

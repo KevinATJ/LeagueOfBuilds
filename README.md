@@ -22,3 +22,10 @@ samples, guidance on mobile development, and a full API reference.
 - https://ddragon.leagueoflegends.com/api/versions.json
 - https://ddragon.leagueoflegends.com/cdn/14.23.1/img/champion/Swain.png
 - https://ddragon.leagueoflegends.com/cdn/14.23.1/img/item/1001.png
+
+## Colores
+
+- 0xFF1D334A (Azul oscuro)
+- 0xFF15242F (Azul muy oscuro)
+- 0xFFC79B3B (Dorado)
+- 0xFFFFFFFF (Blanco)
