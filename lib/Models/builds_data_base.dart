@@ -24,6 +24,7 @@ class BuildsDataBase {
       await db.execute(''' 
         CREATE TABLE builds (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name_buil TEXT,
           champion TEXT,
           item1 TEXT,
           item2 TEXT,

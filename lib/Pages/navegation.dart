@@ -6,7 +6,6 @@ import 'home.dart';
 // Página Navegation
 class Navegation extends StatefulWidget {
   const Navegation({super.key, required this.title});
-
   final String title;
 
   @override
