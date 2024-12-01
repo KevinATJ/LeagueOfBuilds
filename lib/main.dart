@@ -3,6 +3,7 @@ import 'package:league_of_builds/Pages/navegation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'Models/items_data_base.dart';
 
 String? latestApiVersion;
 
@@ -17,6 +18,11 @@ void main() async {
     latestApiVersion = await fetchLatestVersion();
     // ignore: avoid_print
     print('Última versión de la API: $latestApiVersion');
+    // Obtener y guardar los datos de los ítems en la base de datos
+    await fetchItemsData();
+    // Imprimir los ítems almacenados en la base de datos
+    await printItemsFromDB();
+
   } else {
     // ignore: avoid_print
     print('No hay conexión a Internet. Continuando sin obtener la versión.');
@@ -71,6 +77,64 @@ Future<String?> fetchLatestVersion() async {
     // ignore: avoid_print
     print('Error al conectarse al API: $e');
     return null;
+  }
+}
+
+Future<void> fetchItemsData() async {
+  if (latestApiVersion != null) {
+    final url = 'https://ddragon.leagueoflegends.com/cdn/$latestApiVersion/data/es_MX/item.json';
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        // Aseguramos que la respuesta sea decodificada correctamente en UTF-8
+        final data = json.decode(utf8.decode(response.bodyBytes));
+        final items = data['data'];
+
+        // Recorremos los items y guardamos el nombre y la imagen completa
+        items.forEach((key, value) async {
+          if (value['gold'] != null && value['gold']['total'] > 0 && value['gold']['purchasable'] == true && !value.containsKey('inStore')) {
+            final item = {
+              'name': value['name'], // Guardamos el nombre con tildes correctamente
+              'image_full': value['image']['full'] // Guardamos el valor de la imagen completa
+            };
+
+            // Guardamos el item en la base de datos
+            await ItemsDataBase.instance.insertItem(item);
+          }
+        });
+      } else {
+        // ignore: avoid_print
+        print('Error al obtener los ítems. Código de estado: ${response.statusCode}');
+      }
+    } catch (e) {
+      // ignore: avoid_print
+      print('Error al conectarse al API de ítems: $e');
+    }
+  } else {
+    // ignore: avoid_print
+    print('No se pudo obtener la versión más reciente de la API');
+  }
+}
+
+Future<void> printItemsFromDB() async {
+  try {
+    // Obtener los ítems de la base de datos
+    final items = await ItemsDataBase.instance.fetchItems();
+
+    if (items.isNotEmpty) {
+      // Imprimir cada item
+      items.forEach((item) {
+        // ignore: avoid_print
+        print('Item: ${item['name']}, Image: ${item['image_full']}');
+      });
+    } else {
+      // ignore: avoid_print
+      print('No se encontraron ítems en la base de datos.');
+    }
+  } catch (e) {
+    // ignore: avoid_print
+    print('Error al obtener los ítems desde la base de datos: $e');
   }
 }
 
