@@ -114,7 +114,7 @@ Future<void> fetchItemsData() async {
               await ItemsDataBase.instance.insertItem(item);
             } else {
               // ignore: avoid_print
-              print('Item descartado debido a su nombre que termina con <br>: ${value['name']}');
+              print('Item descartado debido a su nombre: ${value['name']}');
             }
           }
         }
@@ -221,7 +221,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'League of Builds',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        fontFamily: 'BeaufortforLOL',
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFC79B3B)),
         useMaterial3: true,
       ),
       home: const Navegation(title: 'League of Builds',), 

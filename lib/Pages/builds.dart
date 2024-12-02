@@ -375,7 +375,10 @@ class _BuildsState extends State<Builds> {
           }
         },
         backgroundColor: const Color(0xFFC79B3B),
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
     );
   }

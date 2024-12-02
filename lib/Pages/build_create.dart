@@ -336,7 +336,7 @@ Future<void> _loadData() async {
                             });
                           },
                           checkColor: Colors.white,
-                          activeColor: Colors.deepPurple,
+                          activeColor: const Color(0xFFC79B3B),
                         );
                       },
                     ),
@@ -361,7 +361,7 @@ Future<void> _loadData() async {
                               item,
                               style: const TextStyle(color: Colors.white),
                             ),
-                            backgroundColor: Colors.deepPurple,
+                            backgroundColor: const Color(0xFFC79B3B),
                           ),
                         ))
                     .toList(),
@@ -436,7 +436,7 @@ Future<void> _loadData() async {
                             });
                           },
                           checkColor: Colors.white,
-                          activeColor: Colors.deepPurple,
+                          activeColor: const Color(0xFFC79B3B),
                         );
                       },
                     ),
@@ -461,7 +461,7 @@ Future<void> _loadData() async {
                               item,
                               style: const TextStyle(color: Colors.white),
                             ),
-                            backgroundColor: Colors.deepPurple,
+                            backgroundColor: const Color(0xFFC79B3B),
                           ),
                         ))
                     .toList(),
@@ -473,7 +473,7 @@ Future<void> _loadData() async {
               Center(
                 child: ElevatedButton(
                   onPressed: _saveBuild, 
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.deepPurple),
+                  style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFC79B3B)),
                   child: const Text(
                     'Guardar Build',
                     style: TextStyle(color: Colors.white),
