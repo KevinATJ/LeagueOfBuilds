@@ -4,6 +4,7 @@ import '/Models/items_data_base.dart';
 import '/Models/champions_data_base.dart';
 import '/Models/builds_data_base.dart';
 import 'package:league_of_builds/main.dart';
+import 'package:share_plus/share_plus.dart';
 
 // Página Builds
 class Builds extends StatefulWidget {
@@ -226,6 +227,30 @@ class _BuildsState extends State<Builds> {
                                         
                                         setState(() {});
                                       }
+                                    },
+                                  ),
+                                  // Botón de compartir
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.share,
+                                      color: Color(0xFFC79B3B),
+                                    ),
+                                    onPressed: () {
+                                      // Construir el texto a compartir
+                                      String buildDetails = "Build: ${build['name_buil']}\n"
+                                          "Campeón: ${build['champion']}\n"
+                                          "Items:\n";
+
+                                      // Añadir los items al texto
+                                      for (var i = 0; i < itemKeys.length; i++) {
+                                        var itemName = build[itemKeys[i]] ?? '';
+                                        if (itemName.isNotEmpty) {
+                                          buildDetails += "- $itemName\n";
+                                        }
+                                      }
+
+                                      // Usar el paquete `share_plus` para compartir el texto
+                                      Share.share(buildDetails);
                                     },
                                   ),
                                 ],
