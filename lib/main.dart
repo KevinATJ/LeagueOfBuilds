@@ -111,7 +111,6 @@ Future<void> fetchItemsData() async {
               // Guardar el item en la base de datos
               await ItemsDataBase.instance.insertItem(item);
             } else {
-              // Si el nombre termina con <br>, no hacer nada o puedes agregar un log o manejo de error
               // ignore: avoid_print
               print('Item descartado debido a su nombre que termina con <br>: ${value['name']}');
             }
