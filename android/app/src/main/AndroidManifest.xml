@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cl.ecabezasktroncoso.league_of_builds">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:label="League of Builds"
         android:name="${applicationName}"

@@ -1,19 +1,31 @@
 # league_of_builds
 
-A new Flutter project.
+## Descripción
+- League Of Builds es una aplicación de creación de builds del videojuego League Of Legends, esta permite seleccionar un campeón junto a 6 items principales más 6 items adicionales para crear una build personalizada, junto a la posibilidad de compartir, borrar y mantener persistencia de estas mismas builds.
 
-## Getting Started
+## Principales características
 
-This project is a starting point for a Flutter application.
+- 1) LOB permite el almacenamiento de builds de manera persistente usando bases de datos.
+- 2) LOB permite la recolección e interpretación de información de APIs.
+- 3) LOB permite la asignación de imagenes para campeones e ítems.
+- 4) LOB permite verificar tu conexión a internet.
+- 5) LOB permite la crear y borrar builds personalizadas.
+- 6) LOB permite compartir tus builds.
+- 7) LOB permite visualizar las ultimas 3 builds creadas.
 
-A few resources to get you started if this is your first Flutter project:
+## Diagrama solicitado
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- ![Diagrama](assets/DiagramaLeagueOfBuilds.drawio.png)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## APK
+
+- [Apk](https://drive.google.com/file/d/12qELfLILGzAKhQ55iG0hbkk85YO71lqf/view?usp=sharing)
+
+## URL de los videos
+
+- [Video presentación]()
+
+- [Video uso de la app en un celular](https://drive.google.com/file/d/1HoKLIW9kc4m9pb-ZArkfjmjFqxbpv0Wv/view?usp=sharing)
 
 ## Links API
 
