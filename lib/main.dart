@@ -6,13 +6,15 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'Models/items_data_base.dart';
 import 'Models/champions_data_base.dart';
 
+bool hasInternet = false;
+
 String? latestApiVersion;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Comprobar si hay conexión a alguna red y si esta tiene acceso a Internet
-  bool hasInternet = await checkInternetConnection();
+  hasInternet = await checkInternetConnection();
 
   if (hasInternet) {
     // Si hay conexión, obtener la última versión de la API
