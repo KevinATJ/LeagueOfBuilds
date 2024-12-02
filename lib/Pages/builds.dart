@@ -70,21 +70,21 @@ class _BuildsState extends State<Builds> {
     }
   }
 
-  // Método para obtener la URL de la imagen de los ítems
+  // Método para obtener la URL de la imagen de los items
   Future<String> _getItemImageUrl(String itemName) async {
     List<Map<String, dynamic>> items = await _itemsFuture;
-    // Buscar el ítem por nombre
+    // Buscar el item por nombre
     var item = items.firstWhere(
       (item) => item['name'] == itemName,
       orElse: () => {},
     );
 
-    // Si se encuentra el ítem, obtener la imagen
+    // Si se encuentra el item, obtener la imagen
     if (item.isNotEmpty) {
       String imageFull = item['image_full'];  // Obtener el nombre de la imagen
       return 'https://ddragon.leagueoflegends.com/cdn/$latestApiVersion/img/item/$imageFull';
     } else {
-      return '';  // Si no se encuentra el ítem, retornar una cadena vacía
+      return '';  // Si no se encuentra el item, retornar una cadena vacía
     }
   }
 
@@ -237,12 +237,21 @@ class _BuildsState extends State<Builds> {
                                     ),
                                     onPressed: () {
                                       // Construir el texto a compartir
-                                      String buildDetails = "Build: ${build['name_buil']}\n"
+                                      String buildDetails = "${build['name_buil']}\n"
                                           "Campeón: ${build['champion']}\n"
-                                          "Items:\n";
+                                          "Items principales:\n";
 
-                                      // Añadir los items al texto
-                                      for (var i = 0; i < itemKeys.length; i++) {
+                                      // Añadir los primeros 6 items como "Items principales"
+                                      for (var i = 0; i < 6; i++) {
+                                        var itemName = build[itemKeys[i]] ?? '';
+                                        if (itemName.isNotEmpty) {
+                                          buildDetails += "- $itemName\n";
+                                        }
+                                      }
+
+                                      // Añadir los siguientes 6 items como "Items adicionales"
+                                      buildDetails += "\nItems adicionales:\n";
+                                      for (var i = 6; i < itemKeys.length; i++) {
                                         var itemName = build[itemKeys[i]] ?? '';
                                         if (itemName.isNotEmpty) {
                                           buildDetails += "- $itemName\n";
@@ -293,7 +302,7 @@ class _BuildsState extends State<Builds> {
                                           height: 40,
                                         )
                                       : Image.asset(
-                                          'assets/images/defaultItem.png', // Imagen local predeterminada
+                                          'assets/images/defaultItem.png',
                                           width: 40,
                                           height: 40,
                                         );

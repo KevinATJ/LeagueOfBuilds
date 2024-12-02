@@ -182,9 +182,9 @@ class _HomeState extends State<Home> {
                                         ),
                                         const SizedBox(height: 10),
 
-                                        // Ítems de la build
+                                        // Items de la build
                                         const Text(
-                                          'Ítems principales:',
+                                          'Items principales:',
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -210,9 +210,9 @@ class _HomeState extends State<Home> {
                                         ),
                                         const SizedBox(height: 10),
 
-                                        // Ítems opcionales
+                                        // Items opcionales
                                         const Text(
-                                          'Ítems opcionales:',
+                                          'Items Adicionales:',
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,

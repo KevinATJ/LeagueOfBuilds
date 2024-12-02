@@ -24,7 +24,6 @@ class _BuildCreateState extends State<BuildCreate> {
   TextEditingController championSearchController = TextEditingController();
   TextEditingController itemSearchController = TextEditingController();
 
-
   @override
   void initState() {
     super.initState();
@@ -32,7 +31,7 @@ class _BuildCreateState extends State<BuildCreate> {
     _loadBuilds();
   }
 
-// Cargar datos de campeones e ítems
+// Cargar datos de campeones e items
 Future<void> _loadData() async {
   final champData = await ChampionsDataBase.instance.fetchChampions();
   final itemData = await ItemsDataBase.instance.fetchItems();
@@ -49,7 +48,7 @@ Future<void> _loadData() async {
     }
   }
 
-  // Filtrar duplicados de ítems
+  // Filtrar duplicados de items
   final List<Map<String, dynamic>> uniqueItems = [];
   for (var item in itemData) {
     if (uniqueItemNames.add(item['name'] as String)) {
@@ -75,7 +74,7 @@ Future<void> _loadData() async {
     });
   }
 
-  // Filtrar ítems
+  // Filtrar items
   void _filterItems(String query) {
     final filtered = items.where((item) {
       return item['name'].toLowerCase().contains(query.toLowerCase());
@@ -245,14 +244,14 @@ Future<void> _loadData() async {
 
               const SizedBox(height: 20),
 
-              // Campo de búsqueda para ítems
-              const Text('Buscar ítem:', style: TextStyle(color: Colors.white)),
+              // Campo de búsqueda para items
+              const Text('Buscar item:', style: TextStyle(color: Colors.white)),
               TextField(
                 controller: itemSearchController,
                 onChanged: _filterItems,
                 style: const TextStyle(color: Colors.white),
                 decoration: const InputDecoration(
-                  hintText: 'Buscar un ítem...',
+                  hintText: 'Buscar un item...',
                   hintStyle: TextStyle(color: Colors.grey),
                   filled: true,
                   fillColor: Color(0xFF15242F),
@@ -262,15 +261,15 @@ Future<void> _loadData() async {
 
               const SizedBox(height: 10),
 
-              // Mensaje si no hay ítems
+              // Mensaje si no hay items
               if (filteredItems.isEmpty && itemSearchController.text.isNotEmpty)
                 const Text(
-                  'No hay ítems con ese nombre.',
+                  'No hay items con ese nombre.',
                   style: TextStyle(color: Colors.red),
                 ),
 
-              // Lista de ítems de la build en un ExpansionTile
-              const Text('Selecciona los ítems de la build:', style: TextStyle(color: Colors.white)),
+              // Lista de items de la build en un ExpansionTile
+              const Text('Selecciona los items de la build:', style: TextStyle(color: Colors.white)),
               ExpansionTile(
                 title: Container(
                   color: const Color(0xFF15242F),
@@ -279,7 +278,7 @@ Future<void> _loadData() async {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        'Ítems de Build',
+                        'Items de Build',
                         style: TextStyle(color: Colors.white),
                       ),
                       Text(
@@ -315,7 +314,10 @@ Future<void> _loadData() async {
                                 const SizedBox(width: 10),
                                 Text(
                                   filteredItems[index]['name'],
-                                  style: const TextStyle(color: Colors.white),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                  ),
                                 ),
                               ],
                             ),
@@ -344,10 +346,10 @@ Future<void> _loadData() async {
 
               const SizedBox(height: 20),
 
-              // Mostrar los ítems seleccionados
+              // Mostrar los items seleccionados
               if (buildItems.isNotEmpty)
                 const Text(
-                  'Ítems seleccionados para Build:',
+                  'Items seleccionados para Build:',
                   style: TextStyle(color: Colors.white),
                 ),
               Wrap(
@@ -367,8 +369,8 @@ Future<void> _loadData() async {
 
               const SizedBox(height: 20),
 
-              // Lista de ítems opcionales
-              const Text('Selecciona los ítems opcionales:', style: TextStyle(color: Colors.white)),
+              // Lista de items opcionales
+              const Text('Selecciona los items opcionales:', style: TextStyle(color: Colors.white)),
               ExpansionTile(
                 title: Container(
                   color: const Color(0xFF15242F),
@@ -377,7 +379,7 @@ Future<void> _loadData() async {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        'Ítems Opcionales',
+                        'Items Opcionales',
                         style: TextStyle(color: Colors.white),
                       ),
                       Text(
@@ -413,7 +415,10 @@ Future<void> _loadData() async {
                                 const SizedBox(width: 10),
                                 Text(
                                   filteredItems[index]['name'],
-                                  style: const TextStyle(color: Colors.white),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                  ),
                                 ),
                               ],
                             ),
@@ -441,10 +446,10 @@ Future<void> _loadData() async {
 
               const SizedBox(height: 20),
 
-              // Mostrar los ítems seleccionados adicionales
+              // Mostrar los items seleccionados adicionales
               if (additionalItems.isNotEmpty)
                 const Text(
-                  'Ítems opcionales seleccionados:',
+                  'Items opcionales seleccionados:',
                   style: TextStyle(color: Colors.white),
                 ),
               Wrap(

@@ -104,7 +104,7 @@ Future<void> fetchItemsData() async {
           final value = items[key];
           if (value['gold'] != null && value['gold']['total'] > 0 && value['gold']['purchasable'] == true && !value.containsKey('inStore')) {
             // Verificar si el nombre no termina con <br>
-            if (!value['name'].toString().endsWith('<br>')) {
+            if (!value['name'].toString().startsWith('Objeto') && !value['name'].toString().endsWith('<br>')) {
               final item = {
                 'name': value['name'], // Guardar el nombre
                 'image_full': value['image']['full'] // Guardar el valor de la imagen
@@ -120,11 +120,11 @@ Future<void> fetchItemsData() async {
         }
       } else {
         // ignore: avoid_print
-        print('Error al obtener los ítems. Código de estado: ${response.statusCode}');
+        print('Error al obtener los items. Código de estado: ${response.statusCode}');
       }
     } catch (e) {
       // ignore: avoid_print
-      print('Error al conectarse al API de ítems: $e');
+      print('Error al conectarse al API de items: $e');
     }
   } else {
     // ignore: avoid_print
@@ -183,11 +183,11 @@ Future<void> printItemsFromDB() async {
       }
     } else {
       // ignore: avoid_print
-      print('No se encontraron ítems en la base de datos.');
+      print('No se encontraron items en la base de datos.');
     }
   } catch (e) {
     // ignore: avoid_print
-    print('Error al obtener los ítems desde la base de datos: $e');
+    print('Error al obtener los items desde la base de datos: $e');
   }
 }
 
