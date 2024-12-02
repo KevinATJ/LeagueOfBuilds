@@ -158,11 +158,17 @@ class _HomeState extends State<Home> {
                                         // Información del campeón y nombre de la build
                                         Row(
                                           children: [
-                                            Image.network(
-                                              championSnapshot.data!,
-                                              width: 50,
-                                              height: 50,
-                                            ),
+                                            hasInternet
+                                                ? Image.network(
+                                                    championSnapshot.data!,
+                                                    width: 50,
+                                                    height: 50,
+                                                  )
+                                                : Image.asset(
+                                                    'assets/images/defaultChampion.png',
+                                                    width: 50,
+                                                    height: 50,
+                                                  ),
                                             const SizedBox(width: 10),
                                             Text(
                                               build['name_buil'],
@@ -188,13 +194,19 @@ class _HomeState extends State<Home> {
                                         const SizedBox(height: 5),
                                         Wrap(
                                           spacing: 8,
-                                          children: itemUrls
-                                              .map((url) => Image.network(
+                                          children: itemUrls.map((url) {
+                                            return hasInternet
+                                                ? Image.network(
                                                     url,
                                                     width: 40,
                                                     height: 40,
-                                                  ))
-                                              .toList(),
+                                                  )
+                                                : Image.asset(
+                                                    'assets/images/defaultItem.png',
+                                                    width: 40,
+                                                    height: 40,
+                                                  );
+                                          }).toList(),
                                         ),
                                         const SizedBox(height: 10),
 
@@ -210,13 +222,19 @@ class _HomeState extends State<Home> {
                                         const SizedBox(height: 5),
                                         Wrap(
                                           spacing: 8,
-                                          children: optionalItemUrls
-                                              .map((url) => Image.network(
+                                          children: optionalItemUrls.map((url) {
+                                            return hasInternet
+                                                ? Image.network(
                                                     url,
                                                     width: 40,
                                                     height: 40,
-                                                  ))
-                                              .toList(),
+                                                  )
+                                                : Image.asset(
+                                                    'assets/images/defaultItem.png',
+                                                    width: 40,
+                                                    height: 40,
+                                                  );
+                                          }).toList(),
                                         ),
                                       ],
                                     ),
@@ -238,4 +256,3 @@ class _HomeState extends State<Home> {
     );
   }
 }
-

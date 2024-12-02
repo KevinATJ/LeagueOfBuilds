@@ -40,7 +40,6 @@ class _BuildsState extends State<Builds> {
   @override
   void initState() {
     super.initState();
-    // Llamar a la comprobación al inicio
     _checkDatabases();
   }
 
@@ -87,6 +86,7 @@ class _BuildsState extends State<Builds> {
       return '';  // Si no se encuentra el ítem, retornar una cadena vacía
     }
   }
+
 @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -141,7 +141,17 @@ class _BuildsState extends State<Builds> {
                             children: [
                               Row(
                                 children: [
-                                  Image.network(championSnapshot.data!, width: 50, height: 50),
+                                  hasInternet
+                                      ? Image.network(
+                                          championSnapshot.data!,
+                                          width: 50,
+                                          height: 50,
+                                        )
+                                      : Image.asset(
+                                          'assets/images/defaultChampion.png',
+                                          width: 50,
+                                          height: 50,
+                                        ),
                                   const SizedBox(width: 10),
                                   Text(
                                     build['name_buil'],
@@ -155,23 +165,67 @@ class _BuildsState extends State<Builds> {
                                   IconButton(
                                     icon: const Icon(
                                       Icons.delete,
-                                      color: Color(0xFFC79B3B), 
+                                      color: Color(0xFFC79B3B),
                                     ),
                                     onPressed: () async {
-                                      // Llamar al método de eliminación de la base de datos
-                                      await BuildsDataBase.instance.deleteBuild(build['id']);
-                                      // ignore: use_build_context_synchronously
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
-                                          content: Text(
-                                            'Build eliminada',
-                                            style: TextStyle(color: Colors.white), 
-                                          ),
-                                          backgroundColor: Color(0xFFC79B3B), 
-                                          duration: Duration(seconds: 2), 
-                                        ),
+                                      // Mostrar cuadro de confirmación
+                                      bool? confirmDelete = await showDialog<bool>(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            backgroundColor: const Color(0xFFC79B3B),
+                                            title: const Text(
+                                              'Confirmar eliminación',
+                                              style: TextStyle(color: Colors.white),
+                                            ),
+                                            content: const Text(
+                                              '¿Estás seguro de que deseas eliminar esta build?',
+                                              style: TextStyle(color: Colors.white),
+                                            ),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop(false);
+                                                },
+                                                child: const Text(
+                                                  'No',
+                                                  style: TextStyle(color: Colors.white),
+                                                ),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop(true);
+                                                },
+                                                child: const Text(
+                                                  'Sí',
+                                                  style: TextStyle(color: Colors.white),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
                                       );
-                                      setState(() {});
+
+                                      // Si el usuario confirma la eliminación
+                                      if (confirmDelete == true) {
+                                        // Llamar al método de eliminación de la base de datos
+                                        await BuildsDataBase.instance.deleteBuild(build['id']);
+                                        
+                                        // Mostrar snackbar con el mensaje de confirmación
+                                        // ignore: use_build_context_synchronously
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                              'Build eliminada',
+                                              style: TextStyle(color: Colors.white),
+                                            ),
+                                            backgroundColor: Color(0xFFC79B3B),
+                                            duration: Duration(seconds: 2),
+                                          ),
+                                        );
+                                        
+                                        setState(() {});
+                                      }
                                     },
                                   ),
                                 ],
@@ -185,7 +239,17 @@ class _BuildsState extends State<Builds> {
                               Wrap(
                                 spacing: 8,
                                 children: itemUrls.take(6).map((itemUrl) {
-                                  return Image.network(itemUrl, width: 40, height: 40);
+                                  return hasInternet
+                                      ? Image.network(
+                                          itemUrl,
+                                          width: 40,
+                                          height: 40,
+                                        )
+                                      : Image.asset(
+                                          'assets/images/defaultItem.png',
+                                          width: 40,
+                                          height: 40,
+                                        );
                                 }).toList(),
                               ),
                               const SizedBox(height: 10),
@@ -197,7 +261,17 @@ class _BuildsState extends State<Builds> {
                               Wrap(
                                 spacing: 8,
                                 children: itemUrls.skip(6).map((itemUrl) {
-                                  return Image.network(itemUrl, width: 40, height: 40);
+                                  return hasInternet
+                                      ? Image.network(
+                                          itemUrl,
+                                          width: 40,
+                                          height: 40,
+                                        )
+                                      : Image.asset(
+                                          'assets/images/defaultItem.png', // Imagen local predeterminada
+                                          width: 40,
+                                          height: 40,
+                                        );
                                 }).toList(),
                               ),
                             ],
@@ -272,5 +346,3 @@ class _BuildsState extends State<Builds> {
     );
   }
 }
-
-

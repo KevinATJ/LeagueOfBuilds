@@ -4,7 +4,6 @@ import 'package:league_of_builds/Models/champions_data_base.dart';
 import 'package:league_of_builds/Models/builds_data_base.dart';
 import 'package:league_of_builds/main.dart';
 
-
 class BuildCreate extends StatefulWidget {
   const BuildCreate({super.key, required this.title});
 
@@ -90,8 +89,10 @@ Future<void> _loadData() async {
     List<Map<String, dynamic>> builds = await BuildsDataBase.instance.fetchBuilds();
     
     // Mostrar los builds en la consola de depuración
+    // ignore: avoid_print
     print("Builds almacenados en la base de datos:");
     for (var build in builds) {
+      // ignore: avoid_print
       print(build);
     }
   }
@@ -212,16 +213,22 @@ Future<void> _loadData() async {
                       itemCount: filteredChampions.length,
                       itemBuilder: (context, index) {
                         return Container(
-                          color: const Color(0xFF15242F), // Establecer el color de fondo
+                          color: const Color(0xFF15242F),
                           child: ListTile(
-                            leading: Image.network(
-                              _getChampionImageUrl(filteredChampions[index]['image_full']),
-                              width: 40,
-                              height: 40,
-                            ),
+                            leading: hasInternet
+                                ? Image.network(
+                                    _getChampionImageUrl(filteredChampions[index]['image_full']),
+                                    width: 40,
+                                    height: 40,
+                                  )
+                                : Image.asset(
+                                    'assets/images/defaultChampion.png',
+                                    width: 40,
+                                    height: 40,
+                                  ),
                             title: Text(
                               filteredChampions[index]['name'],
-                              style: const TextStyle(color: Colors.white), // El texto sigue siendo blanco
+                              style: const TextStyle(color: Colors.white),
                             ),
                             onTap: () {
                               setState(() {
@@ -294,11 +301,17 @@ Future<void> _loadData() async {
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
                               children: [
-                                Image.network(
-                                  _getItemImageUrl(filteredItems[index]['image_full']),
-                                  width: 40,
-                                  height: 40,
-                                ),
+                                hasInternet
+                                    ? Image.network(
+                                        _getItemImageUrl(filteredItems[index]['image_full']),
+                                        width: 40,
+                                        height: 40,
+                                      )
+                                    : Image.asset(
+                                        'assets/images/defaultItem.png',
+                                        width: 40,
+                                        height: 40,
+                                      ),
                                 const SizedBox(width: 10),
                                 Text(
                                   filteredItems[index]['name'],
@@ -386,11 +399,17 @@ Future<void> _loadData() async {
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
                               children: [
-                                Image.network(
-                                  _getItemImageUrl(filteredItems[index]['image_full']),
-                                  width: 40,
-                                  height: 40,
-                                ),
+                                hasInternet
+                                    ? Image.network(
+                                        _getItemImageUrl(filteredItems[index]['image_full']),
+                                        width: 40,
+                                        height: 40,
+                                      )
+                                    : Image.asset(
+                                        'assets/images/defaultItem.png',
+                                        width: 40,
+                                        height: 40,
+                                      ),
                                 const SizedBox(width: 10),
                                 Text(
                                   filteredItems[index]['name'],
@@ -463,9 +482,3 @@ Future<void> _loadData() async {
     );
   }
 }
-
-
-
-
-
-
