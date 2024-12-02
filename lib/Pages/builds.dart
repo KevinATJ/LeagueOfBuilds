@@ -206,25 +206,10 @@ class _BuildsState extends State<Builds> {
                                           );
                                         },
                                       );
-
                                       // Si el usuario confirma la eliminación
                                       if (confirmDelete == true) {
                                         // Llamar al método de eliminación de la base de datos
-                                        await BuildsDataBase.instance.deleteBuild(build['id']);
-                                        
-                                        // Mostrar snackbar con el mensaje de confirmación
-                                        // ignore: use_build_context_synchronously
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                          const SnackBar(
-                                            content: Text(
-                                              'Build eliminada',
-                                              style: TextStyle(color: Colors.white),
-                                            ),
-                                            backgroundColor: Color(0xFFC79B3B),
-                                            duration: Duration(seconds: 2),
-                                          ),
-                                        );
-                                        
+                                        await BuildsDataBase.instance.deleteBuild(build['id']);                                        
                                         setState(() {});
                                       }
                                     },
