@@ -105,7 +105,7 @@ class _BuildsState extends State<Builds> {
               var build = builds[index];
 
               // Obtener la URL de la imagen del campeón usando FutureBuilder
-              return FutureBuilder<String>(
+              return FutureBuilder<String>( 
                 future: _getChampionImageUrl(build['champion']),
                 builder: (context, championSnapshot) {
                   if (championSnapshot.connectionState == ConnectionState.waiting) {
@@ -115,7 +115,6 @@ class _BuildsState extends State<Builds> {
                     return const Text("Imagen no encontrada");
                   }
 
-                  // Obtener las URLs de los ítems
                   List<String> itemKeys = [
                     'item1', 'item2', 'item3', 'item4', 'item5', 'item6',
                     'additionalItem1', 'additionalItem2', 'additionalItem3', 'additionalItem4', 'additionalItem5', 'additionalItem6'
@@ -140,7 +139,6 @@ class _BuildsState extends State<Builds> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Nombre del Build y campeón
                               Row(
                                 children: [
                                   Image.network(championSnapshot.data!, width: 50, height: 50),
@@ -152,6 +150,29 @@ class _BuildsState extends State<Builds> {
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
                                     ),
+                                  ),
+                                  // Ícono de eliminar build
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: Color(0xFFC79B3B), 
+                                    ),
+                                    onPressed: () async {
+                                      // Llamar al método de eliminación de la base de datos
+                                      await BuildsDataBase.instance.deleteBuild(build['id']);
+                                      // ignore: use_build_context_synchronously
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                            'Build eliminada',
+                                            style: TextStyle(color: Colors.white), 
+                                          ),
+                                          backgroundColor: Color(0xFFC79B3B), 
+                                          duration: Duration(seconds: 2), 
+                                        ),
+                                      );
+                                      setState(() {});
+                                    },
                                   ),
                                 ],
                               ),

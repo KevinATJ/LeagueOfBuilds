@@ -54,4 +54,19 @@ class BuildsDataBase {
     final db = await instance.database;
     return await db.query('builds');
   }
+
+  // Método para eliminar una Build por su ID
+  Future<void> deleteBuild(int id) async {
+    final db = await instance.database;
+    try {
+      await db.delete(
+        'builds', // Nombre de la tabla
+        where: 'id = ?', // Condición
+        whereArgs: [id], // Valor del parámetro
+      );
+    } catch (e) {
+      // ignore: avoid_print
+      print("Error al eliminar la build: $e");
+    }
+  }
 }
