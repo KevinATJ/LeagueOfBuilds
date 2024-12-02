@@ -101,13 +101,20 @@ Future<void> fetchItemsData() async {
         for (var key in items.keys) {
           final value = items[key];
           if (value['gold'] != null && value['gold']['total'] > 0 && value['gold']['purchasable'] == true && !value.containsKey('inStore')) {
-            final item = {
-              'name': value['name'], // Guardar el nombre
-              'image_full': value['image']['full'] // Guardar el valor de la imagen
-            };
+            // Verificar si el nombre no termina con <br>
+            if (!value['name'].toString().endsWith('<br>')) {
+              final item = {
+                'name': value['name'], // Guardar el nombre
+                'image_full': value['image']['full'] // Guardar el valor de la imagen
+              };
 
-            // Guardar el item en la base de datos
-            await ItemsDataBase.instance.insertItem(item);
+              // Guardar el item en la base de datos
+              await ItemsDataBase.instance.insertItem(item);
+            } else {
+              // Si el nombre termina con <br>, no hacer nada o puedes agregar un log o manejo de error
+              // ignore: avoid_print
+              print('Item descartado debido a su nombre que termina con <br>: ${value['name']}');
+            }
           }
         }
       } else {

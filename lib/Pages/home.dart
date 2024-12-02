@@ -53,7 +53,7 @@ class _HomeState extends State<Home> {
               const SizedBox(height: 40), // Espaciado entre el texto de bienvenida y el título
               // Título de últimas builds
               const Text(
-                'Últimas builds visitadas',
+                'Últimas builds creadas',
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.w600,
@@ -64,7 +64,7 @@ class _HomeState extends State<Home> {
               const SizedBox(height: 20), // Espaciado entre el título y el mensaje
               // Mensaje de builds vacías
               const Text(
-                'Todavía no haz visitado ninguna build.',
+                'Todavía no haz creado ninguna build.',
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w400,

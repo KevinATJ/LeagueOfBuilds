@@ -98,9 +98,12 @@ Future<void> _loadData() async {
 
   // Guardar la build
   Future<void> _saveBuild() async {
-    if (selectedChampion == null || buildItems.length < 6 || additionalItems.length < 6) {
+    if (selectedChampion == null || buildItems.length < 6 || additionalItems.length < 6) { 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Por favor, completa todos los campos de la creación de builds antes de guardar.')),
+        const SnackBar(
+          content: Text('Por favor, completa todos los campos de la creación de builds antes de guardar.'),
+          backgroundColor: Color(0xFFC79B3B), // Establecer el color de fondo aquí
+        ),
       );
       return;
     }
@@ -126,7 +129,10 @@ Future<void> _loadData() async {
 
     // ignore: use_build_context_synchronously
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Build guardada exitosamente.')),
+      const SnackBar(
+        content: Text('Build guardada exitosamente.'),
+        backgroundColor: Color(0xFFC79B3B),  // Establecer el color de fondo aquí
+      ),
     );
 
     // ignore: use_build_context_synchronously
@@ -191,31 +197,38 @@ Future<void> _loadData() async {
               // Lista de campeones en un ExpansionTile
               const Text('Selecciona un campeón:', style: TextStyle(color: Colors.white)),
               ExpansionTile(
-                title: Text(
+                title: Container(
+                color: const Color(0xFF15242F),
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
                   selectedChampion ?? 'Selecciona un campeón',
                   style: const TextStyle(color: Colors.white),
                 ),
+              ),
                 children: [
                   SizedBox(
                     height: 200, // Tamaño fijo para la lista
                     child: ListView.builder(
                       itemCount: filteredChampions.length,
                       itemBuilder: (context, index) {
-                        return ListTile(
-                          leading: Image.network(
-                            _getChampionImageUrl(filteredChampions[index]['image_full']),
-                            width: 40,
-                            height: 40,
+                        return Container(
+                          color: const Color(0xFF15242F), // Establecer el color de fondo
+                          child: ListTile(
+                            leading: Image.network(
+                              _getChampionImageUrl(filteredChampions[index]['image_full']),
+                              width: 40,
+                              height: 40,
+                            ),
+                            title: Text(
+                              filteredChampions[index]['name'],
+                              style: const TextStyle(color: Colors.white), // El texto sigue siendo blanco
+                            ),
+                            onTap: () {
+                              setState(() {
+                                selectedChampion = filteredChampions[index]['name'];
+                              });
+                            },
                           ),
-                          title: Text(
-                            filteredChampions[index]['name'],
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                          onTap: () {
-                            setState(() {
-                              selectedChampion = filteredChampions[index]['name'];
-                            });
-                          },
                         );
                       },
                     ),
@@ -252,18 +265,22 @@ Future<void> _loadData() async {
               // Lista de ítems de la build en un ExpansionTile
               const Text('Selecciona los ítems de la build:', style: TextStyle(color: Colors.white)),
               ExpansionTile(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Ítems de Build',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    Text(
-                      '${buildItems.length}/6',
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  ],
+                title: Container(
+                  color: const Color(0xFF15242F),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Ítems de Build',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      Text(
+                        '${buildItems.length}/6',
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
                 ),
                 children: [
                   SizedBox(
@@ -272,20 +289,25 @@ Future<void> _loadData() async {
                       itemCount: filteredItems.length,
                       itemBuilder: (context, index) {
                         return CheckboxListTile(
-                          title: Row(
-                            children: [
-                              Image.network(
-                                _getItemImageUrl(filteredItems[index]['image_full']),
-                                width: 40,
-                                height: 40,
-                              ),
-                              const SizedBox(width: 10),
-                              Text(
-                                filteredItems[index]['name'],
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                            ],
+                          title: Container(
+                            color: const Color(0xFFC79B3B),
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Image.network(
+                                  _getItemImageUrl(filteredItems[index]['image_full']),
+                                  width: 40,
+                                  height: 40,
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  filteredItems[index]['name'],
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
                           ),
+
                           value: buildItems.contains(filteredItems[index]['name']),
                           onChanged: (bool? selected) {
                             setState(() {
@@ -335,18 +357,22 @@ Future<void> _loadData() async {
               // Lista de ítems opcionales
               const Text('Selecciona los ítems opcionales:', style: TextStyle(color: Colors.white)),
               ExpansionTile(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Ítems Opcionales',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    Text(
-                      '${additionalItems.length}/6',
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  ],
+                title: Container(
+                  color: const Color(0xFF15242F),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Ítems Opcionales',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      Text(
+                        '${additionalItems.length}/6',
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
                 ),
                 children: [
                   SizedBox(
@@ -355,19 +381,23 @@ Future<void> _loadData() async {
                       itemCount: filteredItems.length,
                       itemBuilder: (context, index) {
                         return CheckboxListTile(
-                          title: Row(
-                            children: [
-                              Image.network(
-                                _getItemImageUrl(filteredItems[index]['image_full']),
-                                width: 40,
-                                height: 40,
-                              ),
-                              const SizedBox(width: 10),
-                              Text(
-                                filteredItems[index]['name'],
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                            ],
+                          title: Container(
+                            color: const Color(0xFFC79B3B),
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Image.network(
+                                  _getItemImageUrl(filteredItems[index]['image_full']),
+                                  width: 40,
+                                  height: 40,
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  filteredItems[index]['name'],
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
                           ),
                           value: additionalItems.contains(filteredItems[index]['name']),
                           onChanged: (bool? selected) {

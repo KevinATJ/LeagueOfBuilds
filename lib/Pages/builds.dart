@@ -17,7 +17,7 @@ class Builds extends StatefulWidget {
 
 class _BuildsState extends State<Builds> {
   bool _canNavigate = false;
-  List<Map<String, dynamic>> _builds = [];
+  //List<Map<String, dynamic>> _builds = [];
   late Future<List<Map<String, dynamic>>> _itemsFuture;
   late Future<List<Map<String, dynamic>>> _championsFuture;
 
@@ -37,20 +37,11 @@ class _BuildsState extends State<Builds> {
     });
   }
 
-  // Método para obtener las builds de la base de datos
-  Future<void> _fetchBuilds() async {
-    List<Map<String, dynamic>> builds = await BuildsDataBase.instance.fetchBuilds();
-    setState(() {
-      _builds = builds;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
     // Llamar a la comprobación al inicio
     _checkDatabases();
-    _fetchBuilds();  // Cargar las builds al iniciar
   }
 
   @override
@@ -58,9 +49,7 @@ class _BuildsState extends State<Builds> {
   super.didChangeDependencies();
   
   // Recargar builds si se recibe un 'true' al regresar de la pantalla BuildCreate
-  ModalRoute.of(context)?.addLocalHistoryEntry(LocalHistoryEntry(onRemove: () {
-    _fetchBuilds(); // Recargar las builds cuando regrese
-  }));
+  ModalRoute.of(context)?.addLocalHistoryEntry(LocalHistoryEntry(onRemove: () {}));
 }
 
   // Método para obtener la URL de la imagen del campeón
@@ -142,7 +131,7 @@ class _BuildsState extends State<Builds> {
                       List<String> itemUrls = itemSnapshot.data ?? [];
                       return Card(
                         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                        color: const Color(0xFF2A3C55),
+                        color: const Color(0xFF15242F),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
