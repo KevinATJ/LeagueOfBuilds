@@ -78,7 +78,7 @@ class _AboutState extends State<About> {
                 'Si tienes alguna pregunta o necesitas soporte técnico, no dudes en contactarnos a través de los siguientes medios:\n\n'
                 'Correos institucional:\n'
                 'Eduardo Cabezas: ecabezas22@alumnos.utalca.cl\n'
-                'Kevin Troncoso: *PON TU CORREO*\n\n'
+                'Kevin Troncoso: ktroncoso22@alumnos.utalca.cl\n\n'
                 'Agradecemos tus comentarios y sugerencias.',
                 style: TextStyle(
                   fontSize: 16,
