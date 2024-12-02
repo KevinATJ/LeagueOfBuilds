@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cl.ecabezasktroncoso.league_of_builds">
     <application
         android:label="League of Builds"
         android:name="${applicationName}"
